@@ -23,13 +23,13 @@ Mohammad Abyan Ranuaji 		| 5027241106
 
 ## Deskripsi Soal
 
-> Insert testcase... (contoh dibawah) // hapus line ini
+Program menerima input dari user berupa message yang dimana message tersebut akan diproses agar diubah menjadi uppercase. Menggunakan Pipe dan Fork
+Print hasil dari tulisan yang sudah diubah menjadi uppercase
 
-Memahami race condition pada operasi check-then-act. Program membuat 2 thread; tiap thread mencoba mengambil satu-satunya sumber daya yang tersedia dari variabel global stok (nilai awal 1). Jika tanpa mutex, kedua thread bisa lolos pengecekan dan sama-sama mengambil sumber daya, menghasilkan nilai akhir stok menjadi -1.
 
 ### Catatan
 
-> Insert catatan dari pengerjaan kalian... (contoh dibawah) // hapus line ini
+![image](https://github.com/user-attachments/assets/5b7bd25d-9982-4d06-aff9-ea079797616f)
 
 Struktur repository:
 ```
