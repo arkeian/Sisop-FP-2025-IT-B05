@@ -39,15 +39,15 @@ Struktur repository:
 
 ## Pengerjaan
 
-> Insert poin soal...
+> Program menerima input dari user berupa message yang dimana message tersebut akan diproses agar diubah menjadi uppercase.
 
 **Teori**
 
-...
+Dalam Bahasa C, pengambilan input dari pengguna dapat dilakukan berbagai cara contohnya seperti scanf, sscanf, fgets, getch(), dimana masing-masing memiliki atribut kelebihan dan kekurangan masing-masing
 
 **Solusi**
 
-...
+Menggunakan fungsi fgets untuk mendapatkan string message, yang mana fgets ini dapat membaca spasi dan membatasi jumlah karkter yang dibaca.
 
 > Insert poin soal...
 
