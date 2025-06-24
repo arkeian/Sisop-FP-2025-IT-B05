@@ -49,6 +49,16 @@ Dalam Bahasa C, pengambilan input dari pengguna dapat dilakukan berbagai cara co
 
 Menggunakan fungsi fgets untuk mendapatkan string message, yang mana fgets ini dapat membaca spasi dan membatasi jumlah karkter yang dibaca.
 
+> Program menerima input dari user berupa message yang dimana message tersebut akan diproses agar diubah menjadi uppercase.
+
+**Teori**
+
+Perubahan karakter huruf kecil ke huruf besar dapat dilakukan dengan fungsi toupper() dari pustaka <ctype.h>. Fungsi ini memproses satu karakter dan mengembalikan versi uppercase-nya jika karakter tersebut adalah huruf kecil.
+
+**Solusi**
+
+Pesan yang diterima diproses satu per satu karakternya menggunakan loop, dan setiap karakter diubah menjadi huruf besar dengan toupper().
+
 > Insert poin soal...
 
 **Teori**
@@ -58,6 +68,8 @@ Menggunakan fungsi fgets untuk mendapatkan string message, yang mana fgets ini d
 **Solusi**
 
 ...
+
+
 
 **Video Menjalankan Program**
 ...
