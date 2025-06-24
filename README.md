@@ -72,7 +72,8 @@ Pesan yang diterima diproses satu per satu karakternya menggunakan loop, dan set
 
 
 **Video Menjalankan Program**
-...
+
+https://github.com/user-attachments/assets/a6a1f9ab-9900-42a5-9fbe-d6ec85160280
 
 ## Daftar Pustaka
 
