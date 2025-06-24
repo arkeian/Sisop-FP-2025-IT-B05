@@ -53,6 +53,21 @@ Menggunakan fungsi fgets untuk mendapatkan string message, yang mana fgets ini d
 
 **Teori**
 
+Bagaimana caranya sebuah program bisa menjalankan dua tugas (proses induk dan anak) secara bersamaan? Di sinilah fungsi fork() berperan. Ketika fork() dipanggil, sistem operasi akan menduplikasi proses yang sedang berjalan. Hasilnya, kita punya dua proses yang identik: proses asli (induk) dan "kloningannya" (anak).
+
+Untuk berkomunikasi, mereka butuh jembatan. Fungsi pipe(fd) inilah yang menciptakan jembatan itu. pipe memberikan kita dua "file descriptor" (disimpan di array fd): fd[0] untuk membaca dan fd[1] untuk menulis.
+
+**Solusi**
+
+- pipe(fd): Pertama, kita buat dulu "pipa"-nya. Jika gagal, program akan berhenti.
+- fork(): Kemudian, kita "kloning" prosesnya.
+  - Di proses anak (case 0:), ia tidak perlu menulis ke pipa, jadi ia langsung menutup ujung untuk menulis (close(fd[1])). Tugasnya adalah menunggu dan membaca pesan dari induk.
+  - Di proses induk (default:), ia tidak perlu membaca dari pipa, jadi ia menutup ujung untuk membaca (close(fd[0])). Tugasnya adalah mengirim pesan ke anak.
+
+> Struktur switch(fork()) adalah cara yang umum untuk memisahkan logika antara proses induk dan anak setelah fork() dipanggil.
+
+**Teori**
+
 Perubahan karakter huruf kecil ke huruf besar dapat dilakukan dengan fungsi toupper() dari pustaka <ctype.h>. Fungsi ini memproses satu karakter dan mengembalikan versi uppercase-nya jika karakter tersebut adalah huruf kecil.
 
 **Solusi**
