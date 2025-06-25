@@ -117,5 +117,8 @@ https://github.com/user-attachments/assets/a6a1f9ab-9900-42a5-9fbe-d6ec85160280
 
 "A mechanism that will allow [cooperating processes] to exchange data and information is required.... The pipe is one of the earliest and simplest channels of communication provided in UNIX systems."
 — Silberschatz, A., Galvin, P. B., & Gagne, G. (2018). Operating System Concepts. 10th Edition. John Wiley & Sons. (Chapter 3: Processes)
-Sitasi 2
+
+A pipe is an unnamed, one-way, first-in-first-out (FIFO) channel for communication between two related processes.... A pipe is created by the pipe system call, which returns a pair of file descriptors in an integer array. fd[0] is opened for reading and fd[1] is opened for writing."
+— Kerrisk, M. (2010). The Linux Programming Interface. No Starch Press. (Chapter 44: Pipes and FIFOs)
+
 Sitasi 3
