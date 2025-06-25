@@ -101,11 +101,11 @@ for (int i = 0; buffer[i] != '\0'; i++) {
 
 **Teori**
 
-...
+Dalam sistem operasi modern, setiap program berjalan dalam prosesnya sendiri yang terisolasi. Setiap proses memiliki ruang memori (memory space) yang terpisah dan tidak bisa secara langsung mengakses memori proses lain. IPC adalah mekanisme yang disediakan oleh sistem operasi untuk memungkinkan proses-proses ini berkoordinasi dan berkomunikasi satu sama lain. Komunikasi ini penting untuk memungkinkan pembagian tugas, pertukaran data, dan sinkronisasi.
 
 **Solusi**
 
-...
+Menggunakan IPC untuk mengirimkan pesan dari satu entitas ke entitas yang lain
 
 
 
@@ -115,6 +115,7 @@ https://github.com/user-attachments/assets/a6a1f9ab-9900-42a5-9fbe-d6ec85160280
 
 ## Daftar Pustaka
 
-Sitasi 1
+"A mechanism that will allow [cooperating processes] to exchange data and information is required.... The pipe is one of the earliest and simplest channels of communication provided in UNIX systems."
+— Silberschatz, A., Galvin, P. B., & Gagne, G. (2018). Operating System Concepts. 10th Edition. John Wiley & Sons. (Chapter 3: Processes)
 Sitasi 2
 Sitasi 3
