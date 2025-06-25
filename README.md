@@ -59,26 +59,48 @@ Sisop-FP-2025-IT-B05/
 **Teori**
 
 <p align="justify">
-&emsp;Bagaimana caranya sebuah program bisa menjalankan dua tugas (proses induk dan anak) secara bersamaan? Di sinilah fungsi fork() berperan. Ketika fork() dipanggil, sistem operasi akan menduplikasi proses yang sedang berjalan. Hasilnya, kita punya dua proses yang identik: proses asli (induk) dan "kloningannya" (anak).
+&emsp;Bagaimana caranya sebuah program bisa menjalankan dua tugas secara bersamaan? Di sinilah fungsi fork() berperan. Ketika fork() dipanggil, sistem operasi akan menduplikasi proses yang sedang berjalan. Hasilnya, kita punya dua proses yang hampir identik: proses asli (induk) dan "kloningannya" (anak).
 </p>
 
 <p align="justify">
-&emsp;Untuk berkomunikasi, mereka butuh jembatan. Fungsi pipe(fd) inilah yang menciptakan jembatan itu. pipe memberikan kita dua "file descriptor" (disimpan di array fd): fd[0] untuk membaca dan fd[1] untuk menulis.
-</p>
-
-<p align="justify">
-&emsp;Setelah forking, penting bagi proses induk untuk melakukan sinkronisasi dengan proses anak. Jika proses induk selesai lebih dulu dan keluar tanpa menunggu proses anak, proses anak bisa menjadi "zombie". Proses zombie adalah proses anak yang telah selesai dieksekusi tetapi entri-nya masih ada di tabel proses karena proses induk belum mengambil status keluarnya. Untuk mencegah hal ini, proses induk harus menggunakan fungsi wait(). Panggilan ini akan menangguhkan eksekusi proses induk sampai proses anak selesai.
+&emsp;Setelah forking, penting bagi proses induk untuk melakukan sinkronisasi dengan proses anak. Jika proses induk selesai lebih dulu tanpa menunggu proses anak, proses anak bisa menjadi "zombie"—sebuah proses yang telah selesai dieksekusi tetapi entri-nya masih ada di tabel proses. Untuk mencegah hal ini, proses induk harus menggunakan fungsi wait() yang akan menangguhkan eksekusinya sampai proses anak selesai.
 </p>
   
 **Solusi**
 
-- pipe(fd): Pertama, kita buat dulu "pipa"-nya. Jika gagal, program akan berhenti.
-- fork(): Kemudian, kita "kloning" prosesnya.
-  - Di proses anak (case 0:), ia tidak perlu menulis ke pipa, jadi ia langsung menutup ujung untuk menulis (close(fd[1])). Tugasnya adalah menunggu dan membaca pesan dari induk.
-  - Di proses induk (default:), ia tidak perlu membaca dari pipa, jadi ia menutup ujung untuk membaca (close(fd[0])). Tugasnya adalah mengirim pesan ke anak.
-- Setelah mengirim pesan, proses induk memanggil wait(NULL). Ini memastikan induk menunggu sampai proses anak selesai mengubah dan mencetak pesan. Dengan demikian, proses anak tidak menjadi proses zombie dan program berakhir dengan bersih.
+<p align="justify">
+&emsp;Struktur switch(fork()) digunakan untuk memisahkan logika antara proses induk dan anak.
+</p>
 
-> Struktur switch(fork()) adalah cara yang umum untuk memisahkan logika antara proses induk dan anak setelah fork() dipanggil.
+- Proses Anak (case 0): Menjalankan kode untuk menerima dan memproses pesan.
+- Proses Induk (default): Menjalankan kode untuk meminta input dan mengirim pesan.
+- Setelah mengirim pesan, proses induk memanggil wait(NULL). Ini memastikan induk menunggu sampai proses anak selesai, sehingga mencegah anak menjadi proses zombie dan program berakhir dengan bersih.
+
+> Proses induk mengirimkan data (string) ke proses anak menggunakan IPC (Inter-Process Communication) berupa pipe.
+
+**Teori**
+
+<p align="justify">
+&emsp;Dalam sistem operasi, setiap proses berjalan di ruang memorinya sendiri dan tidak bisa langsung mengakses memori proses lain. IPC adalah mekanisme yang memungkinkan proses-proses ini berkomunikasi. Salah satu bentuk IPC adalah pipe, yang menciptakan saluran komunikasi satu arah. Fungsi pipe(fd) membuat "pipa" ini dan memberikan dua file descriptor dalam sebuah array fd.
+</p>
+
+- fd[1] adalah ujung untuk menulis (write end). Data yang ditulis ke sini akan masuk ke dalam pipa.
+- fd[0] adalah ujung untuk membaca (read end). Data yang ada di dalam pipa bisa dibaca dari sini.
+  
+**Solusi**
+
+<p align="justify">
+&emsp;Program ini menggunakan pipe agar proses induk dapat mengirimkan string input dari pengguna ke proses anak.
+</p>
+
+- Proses Induk (Penulis):
+  - Menutup ujung pipa yang tidak digunakan: close(fd[0]);.
+  - Mengirim data ke proses anak dengan menulis ke pipa: write(fd[1], buffer, len);.
+- Proses Anak (Pembaca):
+  - Menutup ujung pipa yang tidak digunakan: close(fd[1]);.
+  - Menerima data dari proses induk dengan membaca dari pipa: read(fd[0], buffer, MSGBUFFER);.
+
+> Pesan yang diterima oleh proses anak kemudian diubah menjadi huruf besar.
 
 **Teori**
 
