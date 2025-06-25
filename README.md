@@ -132,7 +132,7 @@ Dalam sistem operasi modern, setiap program berjalan dalam prosesnya sendiri yan
 
 **Solusi**
 
-Menggunakan IPC untuk mengirimkan pesan dari satu entitas ke entitas yang lain
+Menggunakan IPC untuk mengirimkan pesan dari satu entitas ke entitas yang lain.
 
 
 
