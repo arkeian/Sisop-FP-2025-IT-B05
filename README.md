@@ -24,7 +24,7 @@ Mohammad Abyan Ranuaji 		| 5027241106
 ## Deskripsi Soal
 
 <p align="justify">
-&emsp;Program melakukan forking, di mana proses parent menerima satu baris input dari user dalam bentuk string yang nantinya akan di pipe ke proses child untuk diproses agar huruf kecil yang ada, diubah menjadi huruf besar. Setelah itu, proses child akan menampilkan hasil dalam bentuk output ke user.
+&emsp;Program melakukan forking, di mana proses induk satu baris input dari user dalam bentuk string yang nantinya akan di pipe ke proses anak untuk diproses agar huruf kecil yang ada, diubah menjadi huruf besar. Setelah itu, proses anak akan menampilkan hasil dalam bentuk output ke user.
 </p>
   
 ### Catatan
@@ -51,9 +51,16 @@ Sisop-FP-2025-IT-B05/
 **Solusi**
 
 <p align="justify">
-&emsp;Menggunakan fungsi fgets untuk mendapatkan string message, yang mana fgets ini dapat membaca spasi dan membatasi jumlah karkter yang dibaca.
+&emsp;Menggunakan fungsi fgets untuk mendapatkan string message, yang mana fgets ini dapat membaca satu baris dengan spasi dan membatasi jumlah karkter yang dibaca.
 </p>
-  
+
+```c
+printf("parent: Masukkan pesan yang ingin dikirim: ");
+if (fgets(buffer, MSGBUFFER, stdin) == NULL) {
+    perror("fgets");
+    exit(EXIT_FAILURE);
+}
+```
 > Program menerima input dari user berupa message yang dimana message tersebut akan diproses agar diubah menjadi uppercase.
 
 **Teori**
@@ -76,12 +83,25 @@ Sisop-FP-2025-IT-B05/
 - Proses Induk (default): Menjalankan kode untuk meminta input dan mengirim pesan.
 - Setelah mengirim pesan, proses induk memanggil wait(NULL). Ini memastikan induk menunggu sampai proses anak selesai, sehingga mencegah anak menjadi proses zombie dan program berakhir dengan bersih.
 
-> Proses induk mengirimkan data (string) ke proses anak menggunakan IPC (Inter-Process Communication) berupa pipe.
+```c
+switch(fork()) {
+  case -1:
+      perror("fork");
+      exit(EXIT_FAILURE);
+  case 0: // Proses Anak
+      ...
+  default: // Proses Induk
+      ...
+      wait(NULL);
+      break;
+}
+```
+> Program melakukan pembuatan proses anak dan memisahkannya dengan proses induk menggunakan mekanisme forking.
 
 **Teori**
 
 <p align="justify">
-&emsp;Dalam sistem operasi, setiap proses berjalan di ruang memorinya sendiri dan tidak bisa langsung mengakses memori proses lain. IPC adalah mekanisme yang memungkinkan proses-proses ini berkomunikasi. Salah satu bentuk IPC adalah pipe, yang menciptakan saluran komunikasi satu arah. Fungsi pipe(fd) membuat "pipa" ini dan memberikan dua file descriptor dalam sebuah array fd.
+&emsp;Dalam sistem operasi modern, setiap program berjalan dalam prosesnya sendiri yang terisolasi. Setiap proses memiliki ruang memori (memory space) yang terpisah dan tidak bisa secara langsung mengakses memori proses lain. IPC adalah mekanisme yang disediakan oleh sistem operasi untuk memungkinkan proses-proses ini berkoordinasi dan berkomunikasi satu sama lain. Komunikasi ini penting untuk memungkinkan pembagian tugas, pertukaran data, dan sinkronisasi. Salah satu bentuk IPC adalah pipe, yang menciptakan saluran komunikasi satu arah. Fungsi pipe(fd) membuat "pipa" ini dan memberikan dua file descriptor dalam sebuah array fd.
 </p>
 
 - fd[1] adalah ujung untuk menulis (write end). Data yang ditulis ke sini akan masuk ke dalam pipa.
@@ -100,6 +120,37 @@ Sisop-FP-2025-IT-B05/
   - Menutup ujung pipa yang tidak digunakan: close(fd[1]);.
   - Menerima data dari proses induk dengan membaca dari pipa: read(fd[0], buffer, MSGBUFFER);.
 
+```c
+// Pada proses anak
+close(fd[1]);
+            
+ssize_t readRes = read(fd[0], buffer, MSGBUFFER);
+if (readRes <= 0) {
+    perror("read");
+    exit(EXIT_FAILURE);
+}
+else {
+    printf("child: Proses anak (PID: %d) menerima pesan.\n", getpid());
+}
+
+// Pada proses induk
+close(fd[0]);
+
+...
+
+size_t len = strlen(buffer);
+
+ssize_t writeRes = write(fd[1], buffer, len);
+if (writeRes <= 0) {
+    perror("write");
+    exit(EXIT_FAILURE);
+}
+else {
+    printf("parent: Proses induk (PID: %d) mengirim pesan.\n", getpid());
+}
+
+close(fd[1]);
+```
 > Pesan yang diterima oleh proses anak kemudian diubah menjadi huruf besar.
 
 **Teori**
@@ -126,18 +177,7 @@ for (int i = 0; buffer[i] != '\0'; i++) {
 }
 ```
 
-**Teori**
-
-<p align="justify">
-&emsp;Dalam sistem operasi modern, setiap program berjalan dalam prosesnya sendiri yang terisolasi. Setiap proses memiliki ruang memori (memory space) yang terpisah dan tidak bisa secara langsung mengakses memori proses lain. IPC adalah mekanisme yang disediakan oleh sistem operasi untuk memungkinkan proses-proses ini berkoordinasi dan berkomunikasi satu sama lain. Komunikasi ini penting untuk memungkinkan pembagian tugas, pertukaran data, dan sinkronisasi.
-</p>
-
-**Solusi**
-
-<p align="justify">
-&emsp;Menggunakan IPC untuk mengirimkan pesan dari satu entitas ke entitas yang lain.
-</p>
-
+> Program mengubah nilai ASCII dari setiap karakter huruf kecil yang terdapat dalam input string dan mengubahnya ke huruf besar.
 
 **Video Menjalankan Program**
 
@@ -149,6 +189,7 @@ https://github.com/user-attachments/assets/a6a1f9ab-9900-42a5-9fbe-d6ec85160280
 &emsp;"A mechanism that will allow [cooperating processes] to exchange data and information is required.... The pipe is one of the earliest and simplest channels of communication provided in UNIX systems."
 — Silberschatz, A., Galvin, P. B., & Gagne, G. (2018). Operating System Concepts. 10th Edition. John Wiley & Sons. (Chapter 3: Processes)
 </p>
+
 <p align="justify">
 &emsp;A pipe is an unnamed, one-way, first-in-first-out (FIFO) channel for communication between two related processes.... A pipe is created by the pipe system call, which returns a pair of file descriptors in an integer array. fd[0] is opened for reading and fd[1] is opened for writing."
 — Kerrisk, M. (2010). The Linux Programming Interface. No Starch Press. (Chapter 44: Pipes and FIFOs)
