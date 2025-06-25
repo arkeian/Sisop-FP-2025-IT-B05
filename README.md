@@ -23,10 +23,10 @@ Mohammad Abyan Ranuaji 		| 5027241106
 
 ## Deskripsi Soal
 
-Program menerima input dari user berupa message yang dimana message tersebut akan diproses agar diubah menjadi uppercase. Menggunakan Pipe dan Fork
-Print hasil dari tulisan yang sudah diubah menjadi uppercase
-
-
+<p align="justify">
+&emsp;Program melakukan forking, di mana proses parent menerima satu baris input dari user dalam bentuk string yang nantinya akan di pipe ke proses child untuk diproses agar huruf kecil yang ada, diubah menjadi huruf besar. Setelah itu, proses child akan menampilkan hasil dalam bentuk output ke user.
+</p>
+  
 ### Catatan
 
 ![image](https://github.com/user-attachments/assets/5b7bd25d-9982-4d06-aff9-ea079797616f)
@@ -44,20 +44,28 @@ Sisop-FP-2025-IT-B05/
 
 **Teori**
 
-Dalam Bahasa C, pengambilan input dari pengguna dapat dilakukan berbagai cara contohnya seperti scanf, sscanf, fgets, getch(), dimana masing-masing memiliki atribut kelebihan dan kekurangan masing-masing
-
+<p align="justify">
+&emsp;Dalam Bahasa C, pengambilan input dari pengguna dapat dilakukan berbagai cara contohnya seperti scanf, sscanf, fgets, getch(), dimana masing-masing memiliki atribut kelebihan dan kekurangan masing-masing.
+</p>
+  
 **Solusi**
 
-Menggunakan fungsi fgets untuk mendapatkan string message, yang mana fgets ini dapat membaca spasi dan membatasi jumlah karkter yang dibaca.
-
+<p align="justify">
+&emsp;Menggunakan fungsi fgets untuk mendapatkan string message, yang mana fgets ini dapat membaca spasi dan membatasi jumlah karkter yang dibaca.
+</p>
+  
 > Program menerima input dari user berupa message yang dimana message tersebut akan diproses agar diubah menjadi uppercase.
 
 **Teori**
 
-Bagaimana caranya sebuah program bisa menjalankan dua tugas (proses induk dan anak) secara bersamaan? Di sinilah fungsi fork() berperan. Ketika fork() dipanggil, sistem operasi akan menduplikasi proses yang sedang berjalan. Hasilnya, kita punya dua proses yang identik: proses asli (induk) dan "kloningannya" (anak).
+<p align="justify">
+&emsp;Bagaimana caranya sebuah program bisa menjalankan dua tugas (proses induk dan anak) secara bersamaan? Di sinilah fungsi fork() berperan. Ketika fork() dipanggil, sistem operasi akan menduplikasi proses yang sedang berjalan. Hasilnya, kita punya dua proses yang identik: proses asli (induk) dan "kloningannya" (anak).
+</p>
 
-Untuk berkomunikasi, mereka butuh jembatan. Fungsi pipe(fd) inilah yang menciptakan jembatan itu. pipe memberikan kita dua "file descriptor" (disimpan di array fd): fd[0] untuk membaca dan fd[1] untuk menulis.
-
+<p align="justify">
+&emsp;Untuk berkomunikasi, mereka butuh jembatan. Fungsi pipe(fd) inilah yang menciptakan jembatan itu. pipe memberikan kita dua "file descriptor" (disimpan di array fd): fd[0] untuk membaca dan fd[1] untuk menulis.
+</p>
+  
 **Solusi**
 
 - pipe(fd): Pertama, kita buat dulu "pipa"-nya. Jika gagal, program akan berhenti.
@@ -69,13 +77,19 @@ Untuk berkomunikasi, mereka butuh jembatan. Fungsi pipe(fd) inilah yang mencipta
 
 **Teori**
 
-Perubahan karakter huruf kecil ke huruf besar dalam bahasa pemrogramman C dapat dilakukan dengan fungsi toupper() dari pustaka <ctype.h> atau dalam beberapa konteks, secara manual dengan menggunakan pengecekan nilai ASCII suatu karakter. ASCII atau American Standard Code for Information Interchange adalah skema representasi karakter yang umum digunakan pada sistem komputer modern. Setiap karakter direpresentasikan oleh bilangan bulat 7-bit dengan rentang nilai dari 0 sampai 127. Huruf kecil 'a'-'z' direpresentasikan dengan nilai dari 97 hingga 122, sedangkan huruf besar 'A'–'Z' berkisar antara 65 hingga 90.
-  
-Setiap huruf kecil dengan huruf besarnya memiliki selisih tetap sebesar 32 yang memungkinkan konversi sederhana dengan menggunakan operasi aritmatika. Metode manual dipilih karena memungkinkan eksekusi lebih cepat daripada pemanggilan fungsi pustaka, terutama pada loop besar, serta menyederhanakan dan meringankan program dengan tidak mengimpor pustaka.
+<p align="justify">
+&emsp;Perubahan karakter huruf kecil ke huruf besar dalam bahasa pemrogramman C dapat dilakukan dengan fungsi toupper() dari pustaka <ctype.h> atau dalam beberapa konteks, secara manual dengan menggunakan pengecekan nilai ASCII suatu karakter. ASCII atau American Standard Code for Information Interchange adalah skema representasi karakter yang umum digunakan pada sistem komputer modern. Setiap karakter direpresentasikan oleh bilangan bulat 7-bit dengan rentang nilai dari 0 sampai 127. Huruf kecil 'a'-'z' direpresentasikan dengan nilai dari 97 hingga 122, sedangkan huruf besar 'A'–'Z' berkisar antara 65 hingga 90.
+</p>
+
+<p align="justify">
+&emsp;Setiap huruf kecil dengan huruf besarnya memiliki selisih tetap sebesar 32 yang memungkinkan konversi sederhana dengan menggunakan operasi aritmatika. Metode manual dipilih karena memungkinkan eksekusi lebih cepat daripada pemanggilan fungsi pustaka, terutama pada loop besar, serta menyederhanakan dan meringankan program dengan tidak mengimpor pustaka.
+</p>
   
 **Solusi**
 
-Pesan yang diterima diproses satu per satu karakternya menggunakan loop, dan setiap karakter yang merupakan huruf kecil diubah menjadi huruf besar dengan mengurangi nilai ASCII tersebut dengan 32.
+<p align="justify">
+&emsp;Pesan yang diterima diproses satu per satu karakternya menggunakan loop, dan setiap karakter yang merupakan huruf kecil diubah menjadi huruf besar dengan mengurangi nilai ASCII tersebut dengan 32.
+</p>
 
 ```c
 for (int i = 0; buffer[i] != '\0'; i++) {
