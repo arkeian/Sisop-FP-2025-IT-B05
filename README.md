@@ -65,6 +65,10 @@ Sisop-FP-2025-IT-B05/
 <p align="justify">
 &emsp;Untuk berkomunikasi, mereka butuh jembatan. Fungsi pipe(fd) inilah yang menciptakan jembatan itu. pipe memberikan kita dua "file descriptor" (disimpan di array fd): fd[0] untuk membaca dan fd[1] untuk menulis.
 </p>
+
+<p align="justify">
+&emsp;Setelah forking, penting bagi proses induk untuk melakukan sinkronisasi dengan proses anak. Jika proses induk selesai lebih dulu dan keluar tanpa menunggu proses anak, proses anak bisa menjadi "zombie". Proses zombie adalah proses anak yang telah selesai dieksekusi tetapi entri-nya masih ada di tabel proses karena proses induk belum mengambil status keluarnya. Untuk mencegah hal ini, proses induk harus menggunakan fungsi wait(). Panggilan ini akan menangguhkan eksekusi proses induk sampai proses anak selesai.
+</p>
   
 **Solusi**
 
@@ -72,6 +76,7 @@ Sisop-FP-2025-IT-B05/
 - fork(): Kemudian, kita "kloning" prosesnya.
   - Di proses anak (case 0:), ia tidak perlu menulis ke pipa, jadi ia langsung menutup ujung untuk menulis (close(fd[1])). Tugasnya adalah menunggu dan membaca pesan dari induk.
   - Di proses induk (default:), ia tidak perlu membaca dari pipa, jadi ia menutup ujung untuk membaca (close(fd[0])). Tugasnya adalah mengirim pesan ke anak.
+- Setelah mengirim pesan, proses induk memanggil wait(NULL). Ini memastikan induk menunggu sampai proses anak selesai mengubah dan mencetak pesan. Dengan demikian, proses anak tidak menjadi proses zombie dan program berakhir dengan bersih.
 
 > Struktur switch(fork()) adalah cara yang umum untuk memisahkan logika antara proses induk dan anak setelah fork() dipanggil.
 
