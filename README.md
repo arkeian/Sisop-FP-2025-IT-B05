@@ -128,12 +128,15 @@ for (int i = 0; buffer[i] != '\0'; i++) {
 
 **Teori**
 
-Dalam sistem operasi modern, setiap program berjalan dalam prosesnya sendiri yang terisolasi. Setiap proses memiliki ruang memori (memory space) yang terpisah dan tidak bisa secara langsung mengakses memori proses lain. IPC adalah mekanisme yang disediakan oleh sistem operasi untuk memungkinkan proses-proses ini berkoordinasi dan berkomunikasi satu sama lain. Komunikasi ini penting untuk memungkinkan pembagian tugas, pertukaran data, dan sinkronisasi.
+<p align="justify">
+&emsp;Dalam sistem operasi modern, setiap program berjalan dalam prosesnya sendiri yang terisolasi. Setiap proses memiliki ruang memori (memory space) yang terpisah dan tidak bisa secara langsung mengakses memori proses lain. IPC adalah mekanisme yang disediakan oleh sistem operasi untuk memungkinkan proses-proses ini berkoordinasi dan berkomunikasi satu sama lain. Komunikasi ini penting untuk memungkinkan pembagian tugas, pertukaran data, dan sinkronisasi.
+</p>
 
 **Solusi**
 
-Menggunakan IPC untuk mengirimkan pesan dari satu entitas ke entitas yang lain.
-
+<p align="justify">
+&emsp;Menggunakan IPC untuk mengirimkan pesan dari satu entitas ke entitas yang lain.
+</p>
 
 
 **Video Menjalankan Program**
@@ -142,10 +145,15 @@ https://github.com/user-attachments/assets/a6a1f9ab-9900-42a5-9fbe-d6ec85160280
 
 ## Daftar Pustaka
 
-"A mechanism that will allow [cooperating processes] to exchange data and information is required.... The pipe is one of the earliest and simplest channels of communication provided in UNIX systems."
+<p align="justify">
+&emsp;"A mechanism that will allow [cooperating processes] to exchange data and information is required.... The pipe is one of the earliest and simplest channels of communication provided in UNIX systems."
 — Silberschatz, A., Galvin, P. B., & Gagne, G. (2018). Operating System Concepts. 10th Edition. John Wiley & Sons. (Chapter 3: Processes)
-
-A pipe is an unnamed, one-way, first-in-first-out (FIFO) channel for communication between two related processes.... A pipe is created by the pipe system call, which returns a pair of file descriptors in an integer array. fd[0] is opened for reading and fd[1] is opened for writing."
+</p>
+<p align="justify">
+&emsp;A pipe is an unnamed, one-way, first-in-first-out (FIFO) channel for communication between two related processes.... A pipe is created by the pipe system call, which returns a pair of file descriptors in an integer array. fd[0] is opened for reading and fd[1] is opened for writing."
 — Kerrisk, M. (2010). The Linux Programming Interface. No Starch Press. (Chapter 44: Pipes and FIFOs)
+</p>
 
-When a program wants to perform two tasks concurrently, it can use the fork() system call to create a duplicate of itself. This results in two nearly identical processes: the parent and the child. To enable communication between them, the pipe() system call is used, which provides two file descriptors: one for reading and one for writing. After the child process is created, the parent must wait for the child to finish using the wait() function. This prevents the child from becoming a zombie process — a process that has completed execution but still occupies an entry in the process table because its parent hasn’t retrieved its termination status.(Silberschatz, Galvin, & Gagne, 2018)
+<p align="justify">
+&emsp;When a program wants to perform two tasks concurrently, it can use the fork() system call to create a duplicate of itself. This results in two nearly identical processes: the parent and the child. To enable communication between them, the pipe() system call is used, which provides two file descriptors: one for reading and one for writing. After the child process is created, the parent must wait for the child to finish using the wait() function. This prevents the child from becoming a zombie process — a process that has completed execution but still occupies an entry in the process table because its parent hasn’t retrieved its termination status.(Silberschatz, Galvin, & Gagne, 2018)
+</p>
