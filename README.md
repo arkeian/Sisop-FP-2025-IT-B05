@@ -33,8 +33,9 @@ Print hasil dari tulisan yang sudah diubah menjadi uppercase
 
 Struktur repository:
 ```
-.
-..
+Sisop-FP-2025-IT-B05/
+├─ soal_15_IPCToUpper.c
+└─ README.md
 ```
 
 ## Pengerjaan
@@ -68,13 +69,21 @@ Untuk berkomunikasi, mereka butuh jembatan. Fungsi pipe(fd) inilah yang mencipta
 
 **Teori**
 
-Perubahan karakter huruf kecil ke huruf besar dapat dilakukan dengan fungsi toupper() dari pustaka <ctype.h>. Fungsi ini memproses satu karakter dan mengembalikan versi uppercase-nya jika karakter tersebut adalah huruf kecil.
-
+Perubahan karakter huruf kecil ke huruf besar dalam bahasa pemrogramman C dapat dilakukan dengan fungsi toupper() dari pustaka <ctype.h> atau dalam beberapa konteks, secara manual dengan menggunakan pengecekan nilai ASCII suatu karakter. ASCII atau American Standard Code for Information Interchange adalah skema representasi karakter yang umum digunakan pada sistem komputer modern. Setiap karakter direpresentasikan oleh bilangan bulat 7-bit dengan rentang nilai dari 0 sampai 127. Huruf kecil 'a'-'z' direpresentasikan dengan nilai dari 97 hingga 122, sedangkan huruf besar 'A'–'Z' berkisar antara 65 hingga 90.
+  
+Setiap huruf kecil dengan huruf besarnya memiliki selisih tetap sebesar 32 yang memungkinkan konversi sederhana dengan menggunakan operasi aritmatika. Metode manual dipilih karena memungkinkan eksekusi lebih cepat daripada pemanggilan fungsi pustaka, terutama pada loop besar, serta menyederhanakan dan meringankan program dengan tidak mengimpor pustaka.
+  
 **Solusi**
 
-Pesan yang diterima diproses satu per satu karakternya menggunakan loop, dan setiap karakter diubah menjadi huruf besar dengan toupper().
+Pesan yang diterima diproses satu per satu karakternya menggunakan loop, dan setiap karakter yang merupakan huruf kecil diubah menjadi huruf besar dengan mengurangi nilai ASCII tersebut dengan 32.
 
-> Insert poin soal...
+```c
+for (int i = 0; buffer[i] != '\0'; i++) {
+    if (buffer[i] >= 'a' && buffer[i] <= 'z') {
+        buffer[i] -= 32;
+    }
+}
+```
 
 **Teori**
 
