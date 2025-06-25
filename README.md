@@ -126,4 +126,4 @@ https://github.com/user-attachments/assets/a6a1f9ab-9900-42a5-9fbe-d6ec85160280
 A pipe is an unnamed, one-way, first-in-first-out (FIFO) channel for communication between two related processes.... A pipe is created by the pipe system call, which returns a pair of file descriptors in an integer array. fd[0] is opened for reading and fd[1] is opened for writing."
 — Kerrisk, M. (2010). The Linux Programming Interface. No Starch Press. (Chapter 44: Pipes and FIFOs)
 
-Sitasi 3
+When a program wants to perform two tasks concurrently, it can use the fork() system call to create a duplicate of itself. This results in two nearly identical processes: the parent and the child. To enable communication between them, the pipe() system call is used, which provides two file descriptors: one for reading and one for writing. After the child process is created, the parent must wait for the child to finish using the wait() function. This prevents the child from becoming a zombie process — a process that has completed execution but still occupies an entry in the process table because its parent hasn’t retrieved its termination status.(Silberschatz, Galvin, & Gagne, 2018)
