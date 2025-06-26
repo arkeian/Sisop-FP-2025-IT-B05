@@ -29,9 +29,16 @@ Mohammad Abyan Ranuaji 		| 5027241106
   
 ### Catatan
 
+#### Kompilasi dan eksekusi program:
+
+```sh
+gcc -Wall -Werror -Wextra soal_15_IPCToUpper.c -o soal_15_IPCToUpper
+./soal_15_IPCToUpper
+```
+#### Format output dari program:
 ![image](https://github.com/user-attachments/assets/5b7bd25d-9982-4d06-aff9-ea079797616f)
 
-Struktur repository:
+#### Struktur repository:
 ```
 Sisop-FP-2025-IT-B05/
 ├─ soal_15_IPCToUpper.c
@@ -42,7 +49,7 @@ Sisop-FP-2025-IT-B05/
 
 > Program menerima input dari user berupa message yang dimana message tersebut akan diproses agar diubah menjadi uppercase.
 
-**Teori**
+**Teori 1: Pengambilan Input**
 
 <p align="justify">
 &emsp;Dalam Bahasa C, pengambilan input dari pengguna dapat dilakukan berbagai cara contohnya seperti scanf, sscanf, fgets, getch(), dimana masing-masing memiliki atribut kelebihan dan kekurangan masing-masing.
@@ -63,7 +70,7 @@ if (fgets(buffer, MSGBUFFER, stdin) == NULL) {
 ```
 > Program menerima input dari user berupa message yang dimana message tersebut akan diproses agar diubah menjadi uppercase.
 
-**Teori**
+**Teori 2: Forking**
 
 <p align="justify">
 &emsp;Bagaimana caranya sebuah program bisa menjalankan dua tugas secara bersamaan? Di sinilah fungsi fork() berperan. Ketika fork() dipanggil, sistem operasi akan menduplikasi proses yang sedang berjalan. Hasilnya, kita punya dua proses yang hampir identik: proses asli (induk) dan "kloningannya" (anak).
@@ -98,7 +105,7 @@ switch(fork()) {
 ```
 > Program melakukan pembuatan proses anak dan memisahkannya dengan proses induk menggunakan mekanisme forking.
 
-**Teori**
+**Teori 3: Piping**
 
 <p align="justify">
 &emsp;Dalam sistem operasi modern, setiap program berjalan dalam prosesnya sendiri yang terisolasi. Setiap proses memiliki ruang memori (memory space) yang terpisah dan tidak bisa secara langsung mengakses memori proses lain. IPC adalah mekanisme yang disediakan oleh sistem operasi untuk memungkinkan proses-proses ini berkoordinasi dan berkomunikasi satu sama lain. Komunikasi ini penting untuk memungkinkan pembagian tugas, pertukaran data, dan sinkronisasi. Salah satu bentuk IPC adalah pipe, yang menciptakan saluran komunikasi satu arah. Fungsi pipe(fd) membuat "pipa" ini dan memberikan dua file descriptor dalam sebuah array fd.
@@ -153,7 +160,7 @@ close(fd[1]);
 ```
 > Pesan yang diterima oleh proses anak kemudian diubah menjadi huruf besar.
 
-**Teori**
+**Teori 4: Konversi Karakter**
 
 <p align="justify">
 &emsp;Perubahan karakter huruf kecil ke huruf besar dalam bahasa pemrogramman C dapat dilakukan dengan fungsi toupper() dari pustaka <ctype.h> atau dalam beberapa konteks, secara manual dengan menggunakan pengecekan nilai ASCII suatu karakter. ASCII atau American Standard Code for Information Interchange adalah skema representasi karakter yang umum digunakan pada sistem komputer modern. Setiap karakter direpresentasikan oleh bilangan bulat 7-bit dengan rentang nilai dari 0 sampai 127. Huruf kecil 'a'-'z' direpresentasikan dengan nilai dari 97 hingga 122, sedangkan huruf besar 'A'–'Z' berkisar antara 65 hingga 90.
@@ -186,15 +193,25 @@ https://github.com/user-attachments/assets/a6a1f9ab-9900-42a5-9fbe-d6ec85160280
 ## Daftar Pustaka
 
 <p align="justify">
+[1] A. Silberschatz, P. B. Galvin, and G. Gagne, <i>Operating System Concepts</i>, 10th ed. Hoboken, NJ, USA: John Wiley & Sons, 2018, pp. 123, 139-141, Chapter 3: Processes.
+</p>
+
+<p align="justify">
 &emsp;"A mechanism that will allow [cooperating processes] to exchange data and information is required.... The pipe is one of the earliest and simplest channels of communication provided in UNIX systems."
-— Silberschatz, A., Galvin, P. B., & Gagne, G. (2018). Operating System Concepts. 10th Edition. John Wiley & Sons. (Chapter 3: Processes)
 </p>
 
 <p align="justify">
-&emsp;A pipe is an unnamed, one-way, first-in-first-out (FIFO) channel for communication between two related processes.... A pipe is created by the pipe system call, which returns a pair of file descriptors in an integer array. fd[0] is opened for reading and fd[1] is opened for writing."
-— Kerrisk, M. (2010). The Linux Programming Interface. No Starch Press. (Chapter 44: Pipes and FIFOs)
+[2] M. Kerrisk, <i>The Linux Programming Interface</i>. San Fransisco, CA, USA: No Starch Press, 2010, pp. 889-890, 892-895, Chapter 44: Pipes and FIFOs.
 </p>
 
 <p align="justify">
-&emsp;When a program wants to perform two tasks concurrently, it can use the fork() system call to create a duplicate of itself. This results in two nearly identical processes: the parent and the child. To enable communication between them, the pipe() system call is used, which provides two file descriptors: one for reading and one for writing. After the child process is created, the parent must wait for the child to finish using the wait() function. This prevents the child from becoming a zombie process — a process that has completed execution but still occupies an entry in the process table because its parent hasn’t retrieved its termination status.(Silberschatz, Galvin, & Gagne, 2018)
+&emsp;"A pipe is an unnamed, one-way, first-in-first-out (FIFO) channel for communication between two related processes.... A pipe is created by the pipe system call, which returns a pair of file descriptors in an integer array. fd[0] is opened for reading and fd[1] is opened for writing."
+</p>
+
+<p align="justify">
+[3] A. Silberschatz, P. B. Galvin, and G. Gagne, <i>Operating System Concepts</i>, 10th ed. Hoboken, NJ, USA: John Wiley & Sons, 2018, pp. 118-122, Chapter 3: Processes.
+</p>
+
+<p align="justify">
+&emsp;"When a program wants to perform two tasks concurrently, it can use the fork() system call to create a duplicate of itself. This results in two nearly identical processes: the parent and the child. To enable communication between them, the pipe() system call is used, which provides two file descriptors: one for reading and one for writing. After the child process is created, the parent must wait for the child to finish using the wait() function. This prevents the child from becoming a zombie process — a process that has completed execution but still occupies an entry in the process table because its parent hasn’t retrieved its termination status."
 </p>
